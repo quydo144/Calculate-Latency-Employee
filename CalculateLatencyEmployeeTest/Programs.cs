@@ -105,5 +105,22 @@ namespace CalculateLatencyEmployeeTest
             var latency = _employee.CalculateLate(_timeline);
             Assert.That(latency, Is.EqualTo(new TimeSpan(6, 15, 0))); // late 6h15p
         }
+
+        [Test]
+        public void TestLateArrival_Night()
+        {
+            Timeline timeline = new Timeline()
+            {
+                StartShift = new TimeSpan(12, 20, 0, 0),
+                EndShift = new TimeSpan(13, 5, 0, 0),
+                StartBreak = new TimeSpan(13, 0, 0, 0),
+                EndBreak = new TimeSpan(13, 1, 0, 0),
+                LeaveFrom = new TimeSpan(12, 22, 0, 0),
+                LeaveTo = new TimeSpan(12, 23, 0, 0),
+                SignIn = new TimeSpan(13, 2, 15, 0),
+            };
+            var latency = _employee.CalculateLate(timeline);
+            Assert.That(latency, Is.EqualTo(new TimeSpan(4, 15, 0))); // late 6h15p
+        }
     }
 }
